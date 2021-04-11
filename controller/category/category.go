@@ -29,8 +29,24 @@ func AddCategory(c *gin.Context) {
 	})
 }
 
+// 查询分类信息
+func GetCateInfo(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	data, code := model.GetCateInfo(id)
+
+	c.JSON(
+		http.StatusOK, gin.H{
+			"status":  code,
+			"data":    data,
+			"message": errmsg.GetErrmsg(code),
+		},
+	)
+
+}
+
 //查询分类列表
-func GetCategories(c *gin.Context) {
+func GetCate(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
 	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
 
@@ -53,7 +69,7 @@ func GetCategories(c *gin.Context) {
 // todo 查询分类下的所有文章
 
 //编辑分类名
-func EditCategory(c *gin.Context) {
+func EditCate(c *gin.Context) {
 	var data model.Category
 	id, _ := strconv.Atoi(c.Param("id"))
 	c.ShouldBindJSON(&data)
@@ -71,7 +87,7 @@ func EditCategory(c *gin.Context) {
 }
 
 //删除分类
-func DeleteCategory(c *gin.Context) {
+func DeleteCate(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	code = model.DeleteCategory(id)
 	c.JSON(http.StatusOK, gin.H{

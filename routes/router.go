@@ -17,6 +17,8 @@ func InitRouter() {
 	r.Use(middleware.Log())
 	r.Use(gin.Recovery())
 	r.Use(middleware.Cors())
+
+	//到底该不该区分要不要token的情况
 	auth := r.Group("api/v1")
 	auth.Use(middleware.JwtToken())
 	{
@@ -25,8 +27,8 @@ func InitRouter() {
 		auth.DELETE("user/:id", user.DeleteUser) //去user的模型里写数据库操作的方法
 		//分类模块的路由接口
 		auth.POST("category/add", category.AddCategory)
-		auth.PUT("category/:id", category.EditCategory)
-		auth.DELETE("category/:id", category.DeleteCategory)
+		auth.PUT("category/:id", category.EditCate)
+		auth.DELETE("category/:id", category.DeleteCate)
 		//文章模块的路由接口
 		auth.POST("article/add", article.AddArticle)
 		auth.PUT("article/:id", article.EditArticle)
@@ -38,11 +40,12 @@ func InitRouter() {
 	{
 		router.POST("user/add", user.AddUser)
 		router.GET("users", user.GetUsers)
-		router.GET("categories", category.GetCategories)
+		router.GET("user/:id", user.GetUserInfo)
+		router.GET("categories", category.GetCate)
 		router.GET("articles", article.GetArticles)             //查询所有文章
 		router.GET("article/list/:cid", article.GetCateArticle) //查询分类下的所有文章
 		router.GET("article/info/:id", article.GetArticleInfo)  //查询单个文章
 		router.POST("login", user.Login)
 	}
-	r.Run(utils.HttpPort)
+	_ = r.Run(utils.HttpPort)
 }

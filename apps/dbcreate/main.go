@@ -21,6 +21,7 @@ func initDBData() {
 	if admin.ID == 0 {
 		admin.Username = "admin"
 		admin.Password = model.ScryptPw("silin123")
+		//model.ScryptPw("silin123")
 		admin.Role = 1
 		model.DB.Save(&admin)
 	}
@@ -30,7 +31,8 @@ func initDBData() {
 	model.DB.Where("username = ?", "user1").First(&user1)
 	if user1.ID == 0 {
 		user1.Username = "user1"
-		user1.Password = model.ScryptPw("silin123")
+		user1.Password = model.ScryptPw("123456")
+		//model.ScryptPw("silin123")
 		user1.Role = 2
 		model.DB.Save(&user1)
 	}

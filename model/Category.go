@@ -52,6 +52,13 @@ func EditCategory(id int, data *Category) (int, int64) {
 	return errmsg.SUCCESS, total //gorm不识别大小写？
 }
 
+// 查询单个分类信息
+func GetCateInfo(id int) (Category, int) {
+	var cate Category
+	DB.Where("id = ?", id).First(&cate)
+	return cate, errmsg.SUCCESS
+}
+
 //获取分类列表
 func GetCategories(pageSize int, pageNum int) ([]Category, int64) {
 	var cate []Category
